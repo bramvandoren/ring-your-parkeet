@@ -1,0 +1,298 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Algemene stijlen */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.container {
+  margin-top: 30px;
+  
+}
+
+/* Stijlen voor het navigatiemenu */
+.navbar {
+  background-color: #000000;
+}
+
+.navbar-toggler {
+  order: 0;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  order: 1;
+}
+
+.nav-link {
+  font-size: 16px;
+}
+
+/* Stijlen voor de paginakoptekst */
+.page-header {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Stijlen voor formulieren */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  height: 40px;
+  font-size: 16px;
+}
+
+.btn {
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Stijlen voor tabellen */
+.table {
+  border: 1px solid #ddd;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: center;
+}
+
+.table th {
+  font-weight: bold;
+  background-color: #f8f9fa;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fa;
+}
+
+/* Stijlen voor kaarten */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  font-weight: bold;
+}
+
+.card-body {
+  margin-top: 10px;
+}
+
+/*
+CART
+*/
+/* Stijlen voor het winkelmandje */
+.cart-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  order: 2;
+}
+.cart-parent {
+  display: flex;
+}
+.cart-toggle {
+  position: relative;
+  color: #007bff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.cart-icon {
+  font-size: 1.5rem; /* Pas de gewenste grootte aan */
+  display: inline-block;
+}
+
+.cartItem {
+  display: flex;
+
+}
+.cartItem .cartItem-title {
+  font-weight: bold;
+  width: 100%;
+  
+}
+.cart-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1;
+  display: none;
+  min-width: 200px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.cart-container.show .cart-dropdown {
+  display: none;
+}
+
+.cart-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-items-list li {
+  padding: 5px 0;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+/* Stijlen voor de header */
+.container-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.navbar-brand {
+  order: 2;
+}
+
+.cart-parent {
+  order: 3;
+}
+
+.cart-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cart-toggle {
+  position: relative;
+  color: #007bff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.cart-icon {
+  font-size: 1.5rem;
+  display: inline-block;
+}
+
+.cart-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1;
+  display: none;
+  min-width: 200px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.cart-container.show .cart-dropdown {
+  display: none;
+}
+
+.cart-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-items-list li {
+  padding: 5px 0;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+@media (max-width: 991.98px) {
+  .collapse.navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px;
+    z-index: 999;
+  }
+  .navbar-nav.ml-auto {
+    flex-direction: column;
+    align-items: center;
+  }
+  .navbar-toggler {
+    margin-bottom: 10px;
+  }
+}
+
+
