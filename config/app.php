@@ -167,6 +167,8 @@ return [
         /*
          * Package Service Providers...
          */
+        Mollie\Laravel\MollieServiceProvider::class,
+
 
         /*
          * Application Service Providers...

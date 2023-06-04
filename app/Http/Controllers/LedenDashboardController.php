@@ -20,7 +20,10 @@ class LedenDashboardController extends Controller
             $menuItems[1]['active'] = true;
             // Haal de ingelogde gebruiker op
             $user = auth()->user();
+            // dd($user);
+            $userStatus = UserStatus::where('user_id', $user->id)->first();
 
+            $lidgeldBetaald = $userStatus ? $userStatus->isPaid() : false;
             // Definieer hoeveel lidgeld
             $lidgeld = 50;
 
@@ -28,7 +31,7 @@ class LedenDashboardController extends Controller
             $bestellingen = Order::where('user_id', $user->id)->get();
             $cart = Cart::session(3);
     
-            return view('dashboard.index', compact('user', 'bestellingen','menuItems', 'lidgeld', 'cart'));
+            return view('dashboard.index', compact('user', 'bestellingen','menuItems', 'lidgeld', 'cart', 'lidgeldBetaald'));
         }
     
         public function betalingLidgeld()
@@ -82,5 +85,14 @@ class LedenDashboardController extends Controller
             $bestelling->save();
 
             return redirect()->route('dashboard.index')->with('success', 'Bestelling geannuleerd.');
+        }
+        public function verwijderBestelling(Order $bestelling)
+        {
+            // Voer hier de logica uit om de bestelling te verwijderen
+
+            // Bijvoorbeeld:
+            $bestelling->delete();
+
+            return redirect()->route('dashboard.index')->with('success', 'Bestelling verwijderd.');
         }
 }

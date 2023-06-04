@@ -7,19 +7,17 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Inwendige maat</th>
-                    <th>Dikte</th>
-                    <th>Hoogte</th>
-                    <th>Prijs</th>
+                    <th>Type</th>
+                    <th>Maat (diameter)</th>
+                    <th>Prijs/stuk (€)</th>
                     <th>Aantal</th>
                 </tr>
             </thead>
             <div>
                 @foreach ($vogelringen as $vogelring)
                     <tr>
+                        <td>{{ $vogelring->type->name }}</td>
                         <td>{{ $vogelring->diameter }}</td>
-                        <td>{{ $vogelring->dikte }}</td>
-                        <td>{{ $vogelring->hoogte }}</td>
                         <td>{{ $vogelring->price }}</td>
                         <td>
                             <form method="post">

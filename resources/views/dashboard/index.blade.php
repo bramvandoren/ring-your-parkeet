@@ -1,9 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
+<div class="container d-flex flex-column">
     <div class="container">
-        <h2>Dashboard</h2>
-
         <!-- Lidgeld betalen -->
         <h3>Lidgeld betalen</h3>
         <p>Jaarlijks lidgeld: ${{ $lidgeld }}</p>
@@ -11,11 +10,20 @@
             @csrf
             <button type="submit" class="btn btn-primary">Betaal lidgeld</button>
         </form>
-
-        <!-- Bestellingen -->
+    </div>
+    <div class="container">
+    <h3>Ringen Bestellen</h3>
+    @if ($lidgeldBetaald)
+        <a href="{{ route('order.store') }}"  class="btn btn-primary">Maak bestelling</a>
+    @else
+        <p>Plaats van bestellingen is alleen mogelijk na betaling van het <b>lidgeld.</b></p>
+    @endif
+    </div>
+</div>
+    <div class="container w-100 p-3">
         <h3>Bestelhistorie</h3>
         @if ($bestellingen->count() > 0)
-            <table>
+            <table class="container w-100 p-3">
                 <thead>
                     <tr>
                         <th>Bestelling ID</th>
@@ -34,6 +42,13 @@
                                     <button type="submit" class="btn btn-danger">Annuleren</button>
                                 </form>
                             </td>
+                            {{-- <td>
+                                <form action="{{ route('bestellingen.verwijderen', $bestelling) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-outline-danger" type="submit">Verwijder</button>
+                                </form>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>
@@ -41,13 +56,6 @@
         @else
             <p>Geen bestellingen gevonden.</p>
         @endif
-
-        <h3>Ringen Bestellen</h3>
-        <a href="{{ route('order.store') }}"  class="btn btn-primary">Maak bestelling</a>
-        {{-- <form method="POST" action="{{ route('dashboard.bestellen-ringen') }}">
-            @csrf
-            <button type="submit" class="btn btn-primary">Bestelling Toevoegen</button>
-        </form> --}}
     </div>
 @endsection
 

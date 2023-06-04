@@ -9,5 +9,13 @@ class UserStatus extends Model
 {
   protected $table = 'users_status';
 
-  // Rest van de modeldefinitie
+  public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    
+    public function isPaid()
+    {
+        return $this->status === 'betaald';
+    }
 }

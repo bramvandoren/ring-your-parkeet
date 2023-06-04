@@ -8,6 +8,12 @@
             @csrf
             @method('PUT')
 
+            <!-- Stamnummer bekijken + gegevens (aanpasbaar) -->
+            <div class="form-group">
+                <label for="stamnr">Stamnummer:</label>
+                <input type="text" name="stamnr" id="stamnr" class="form-control" value="{{ $user->stamnr }}" readonly>
+            </div>
+
             <div class="form-group">
                 <label for="firstname">Voornaam:</label>
                 <input type="text" name="firstname" id="firstname" class="form-control" value="{{ $user->firstname }}" required>
@@ -30,12 +36,6 @@
                 <label for="password_confirmation">Wachtwoord bevestigen:</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
             </div>
-
-             <!-- Extra velden -->
-             {{-- <div class="form-group">
-                <label for="stamnr">Stamnummer:</label>
-                <input type="text" name="stamnr" id="stamnr" class="form-control" value="{{ $user->stamnr }}">
-            </div> --}}
 
             <div class="form-group">
                 <label for="address_street">Straat:</label>

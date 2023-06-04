@@ -27,16 +27,12 @@ class Controller extends BaseController
             'url' => '/leden-dashboard',
             'active' => false
         ],
-        // [
-        //     'title' => 'Ringen',
-        //     'url' => '/leden-dashboard/ringen-bestellen',
-        //     'active' => false
-        // ],
         [
             'title' => 'Contact',
             'url' => '/contact',
             'active' => false
-        ]
+        ],
+        
     ];
 
     // Check if user is logged in

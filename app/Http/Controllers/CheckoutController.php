@@ -8,6 +8,9 @@ use Mollie\Laravel\Facades\Mollie;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
 
 class CheckoutController extends Controller
 {
@@ -16,14 +19,17 @@ class CheckoutController extends Controller
         $webhookUrl = route('webhooks.mollie');
 
         if(App::environment('local')) {
-            $webhookUrl = 'https://f60f-2a02-a03f-f2cf-d600-f889-ce73-2c3f-5bb8.ngrok-free.app/webhooks/mollie';
+            $webhookUrl = 'https://483e-87-67-0-190.ngrok-free.app/webhooks/mollie';
         }
+
+        // dd($webhookUrl);
         Log::alert('Before Mollie checkout, total price is calculated');
         
         $cart = Cart::session(3);
         $total = $cart->getTotal();
-        $total = number_format($total,2);
+        $total = (string) number_format($total, 2, '.', '');
         // dd($webhookUrl);
+        // $client = new GuzzleHttp\Client(['verify' => false]);
         $payment = Mollie::api()->payments->create([
             "amount" => [
                 "currency" => "EUR",

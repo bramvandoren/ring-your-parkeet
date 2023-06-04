@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Ring;
+use App\Type;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class RingController extends Controller
         $menuItems[1]['active'] = true;
         // Hier kun je de winkelwagengegevens ophalen en doorgeven aan de view
         // $cartItems = session()->get('cart') ?? [];
-        $vogelringen = Ring::all();
+        $vogelringen = Ring::with('type')->get();
+        // $imageRing = Ring::find(1);
         $cart = Cart::session(3);
         // dd($cart->getContent());
 

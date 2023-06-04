@@ -16,30 +16,31 @@
                                 <p>{{ $item->name->name }}</p>
                                 <p>{{ $item->name->type_id }}</p>
                                 <p>Aantal:
-                                    <input type="number" min="1" name="aantal[]" value="{{ $item->quantity }}" >
+                                    <input type="number" min="1" name="aantal[]" value="{{ $item->quantity }}" class="form-control">
                                     <input type="hidden" name="item_id[]" value="{{ $item->id }}">
                                 </p>
-                                <a href="{{ route('cart.remove', ['id' => $item->id]) }}">Item verwijderen</a>
+                                <a href="{{ route('cart.remove', ['id' => $item->id]) }}" class="btn btn-link">Item verwijderen</a>
                             </div>
                             <div class="d-flex align-items-center">
                                 <h3>€ {{ $item->price }}</h3>
                             </div>
                         </li>
                     @endforeach
-                    <h2>Totaal: €{{ $cart->getTotal() }}</h2>                </ul>
+                    <h2 class="mt-4">Totaal: €{{ $cart->getTotal() }}</h2>
+                </ul>
+                <div class="text-right mt-4">
+                    <a href="{{ route('cart.checkout') }}" class="btn btn-primary">Afrekenen</a>
+                </div>
             </form>
         </div>
         <div>
-            <h2>We accepteren</h2>
+            <h2 class="mt-4">We accepteren</h2>
             <ul class="payment-icons">
                 <li><i class="fab fa-cc-visa"></i></li>
                 <li><i class="fab fa-cc-mastercard"></i></li>
                 <li><i class="fab fa-cc-paypal"></i></li>
                 <li><i class="fab fa-cc-amex"></i></li>
             </ul>
-        </div>
-        <div class="text-right">
-            <a href="{{ route('cart.checkout') }}" class="btn btn-primary">Afrekenen</a>
         </div>
     </div>
 @endsection
