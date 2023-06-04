@@ -72,6 +72,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/leden-dashboard/ringen-bestellen/{bestelling}', [LedenDashboardController::class, 'annuleerBestelling'])
     ->name('dashboard.annuleer-bestelling');
     Route::delete('/bestellingen/{bestelling}', [LedenDashboardController::class, 'verwijderBestelling'])->name('bestellingen.verwijderen');
+    Route::get('/bestelling/{id}', [LedenDashboardController::class, 'detailBestelling'])->name('bestelling.detail');
+
+
 
     //Cart routes
     // Route voor het weergeven van de winkelwagen

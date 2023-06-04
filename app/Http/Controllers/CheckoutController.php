@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Order;
 use Illuminate\Http\Request;
 use Mollie\Laravel\Facades\Mollie;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
@@ -14,22 +15,32 @@ use GuzzleHttp\Exception\RequestException;
 
 class CheckoutController extends Controller
 {
-    public function checkout() {
+    public function checkout(Request $req) {
 
+        //Info van shoppingcart
+        $cart = Cart::session(3);
+        $total = $cart->getTotal();
+        // dd(auth()->user());
+        //Maak nieuwe bestelling
+        $order = new Order();
+        $order->reference = auth()->user()->firstname; // Genereer een referentiecode of gebruik een andere methode om een unieke referentie te maken
+        $order->status = 'pending...'; // Stel de juiste status in
+        $order->total_price = $total; // Wordt later berekend op basis van de ontvangen producten
+        $order->shipping_data = '...'; // Vul de juiste verzendgegevens in
+        $order->payment_data = ".."; // Vul de juiste betalingsgegevens in
+        $order->remarks = '...'; // Vul eventuele opmerkingen in
+        $order->admin_remarks = '...'; // Vul eventuele opmerkingen voor de beheerder in
+    
         $webhookUrl = route('webhooks.mollie');
-
         if(App::environment('local')) {
             $webhookUrl = 'https://483e-87-67-0-190.ngrok-free.app/webhooks/mollie';
         }
 
-        // dd($webhookUrl);
         Log::alert('Before Mollie checkout, total price is calculated');
-        
-        $cart = Cart::session(3);
-        $total = $cart->getTotal();
         $total = (string) number_format($total, 2, '.', '');
-        // dd($webhookUrl);
-        // $client = new GuzzleHttp\Client(['verify' => false]);
+        // $paymentId = $req->input('id');
+        // $payment = Mollie::api()->payments()->get($req->json('id'));
+        // dd($payment);
         $payment = Mollie::api()->payments->create([
             "amount" => [
                 "currency" => "EUR",
@@ -39,9 +50,14 @@ class CheckoutController extends Controller
             "redirectUrl" => route('checkout.success'),
             "webhookUrl" => $webhookUrl,
             "metadata" => [
-                "order_id" => "12345",
+                "order_id" => $order->id,
+                "order_from" => $order->name,
             ],
         ]);
+    
+
+        $order->save();
+
         return redirect($payment->getCheckoutUrl(), 303);
     }
 

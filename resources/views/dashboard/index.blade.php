@@ -5,11 +5,16 @@
     <div class="container">
         <!-- Lidgeld betalen -->
         <h3>Lidgeld betalen</h3>
-        <p>Jaarlijks lidgeld: € {{ $lidgeld }}</p>
-        <form method="POST" action="{{ route('dashboard.betalingLidgeld') }}">
-            @csrf
-            <button type="submit" class="btn btn-primary">Betaal lidgeld</button>
-        </form>
+        @if ($lidgeldBetaald)
+            <p>Lidgeld betaald.</p>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#paymentDetailsModal">Bekijk betalingsdetails</button>
+        @else
+            <p>Jaarlijks lidgeld: € {{ $lidgeld }}</p>
+            <form method="POST" action="{{ route('dashboard.betalingLidgeld') }}">
+                @csrf
+                <button type="submit" class="btn btn-primary">Betaal lidgeld</button>
+            </form>
+        @endif
     </div>
     <div class="container">
     <h3>Ringen Bestellen</h3>
@@ -36,19 +41,8 @@
                             <td>{{ $bestelling->id }}</td>
                             <td>{{ $bestelling->status }}</td>
                             <td>
-                                <form method="POST" action="{{ route('dashboard.annuleer-bestelling', $bestelling->id) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Annuleren</button>
-                                </form>
+                                <a href="{{ route('bestelling.detail', $bestelling->id) }}" class="btn btn-primary">Meer info</a>
                             </td>
-                            {{-- <td>
-                                <form action="{{ route('bestellingen.verwijderen', $bestelling) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-outline-danger" type="submit">Verwijder</button>
-                                </form>
-                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>
@@ -57,5 +51,31 @@
             <p>Geen bestellingen gevonden.</p>
         @endif
     </div>
-@endsection
 
+    <!-- Payment Details Modal -->
+    <div class="modal fade" id="paymentDetailsModal" tabindex="-1" role="dialog" aria-labelledby="paymentDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentDetailsModalLabel">Betalingsdetails</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Weergeven van details betaling -->
+                    <p>Betalingsinformatie:</p>
+                    <ul>
+                        <li>Transactie ID: {{ $userStatus->id }}</li>
+                        <li>Betaalinformatie: {{ $userStatus->payment_data }}</li>
+                        <li>Bedrag: € {{ $userStatus->total_price }}</li>
+                        <li>Datum: {{ $userStatus->date }}</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

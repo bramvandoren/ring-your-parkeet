@@ -6,6 +6,7 @@ use App\Http\Controllers\BestellingController;
 use App\Models\Bestelling;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use App\Order;
+use App\UserGroup;
 use App\UserStatus;
 use Illuminate\Support\Facades\App;
 
@@ -24,22 +25,22 @@ class LedenDashboardController extends Controller
             $user = auth()->user();
             // dd($user);
             $userStatus = UserStatus::where('user_id', $user->id)->first();
-
+            // dd($userStatus);
             $lidgeldBetaald = $userStatus ? $userStatus->isPaid() : false;
-            // Definieer hoeveel lidgeld
-            $lidgeld = 50;
+
+            // Haal de usergroup van de gebruiker op
+            $userGroup = UserGroup::find($user->group_id);
+            $lidgeld = $userGroup ? $userGroup->price : 0;
 
             // Haal de bestellingen van de gebruiker op
             $bestellingen = Order::where('user_id', $user->id)->get();
             $cart = Cart::session(3);
     
-            return view('dashboard.index', compact('user', 'bestellingen','menuItems', 'lidgeld', 'cart', 'lidgeldBetaald'));
+            return view('dashboard.index', compact('user', 'bestellingen','menuItems', 'lidgeld', 'cart', 'lidgeldBetaald', 'userStatus'));
         }
     
         public function betalingLidgeld(Request $req)
-        {
-            
-    
+        { 
             $amount = 50;
             // add to decimals and convert to string
             $amount = (string) number_format($amount, 2, '.', '');
@@ -110,6 +111,14 @@ class LedenDashboardController extends Controller
             $bestelling->save();
 
             return redirect()->route('dashboard.index')->with('success', 'Bestelling geannuleerd.');
+        }
+
+        public function detailBestelling($id)
+        {
+            $bestelling = Order::findOrFail($id);
+            $bestellingenDetail = $bestelling->bestellingenDetail;
+            $cart = Cart::session(3);
+            return view('dashboard.edit', compact('cart', 'bestelling', 'bestellingenDetail'));
         }
         public function verwijderBestelling(Order $bestelling)
         {

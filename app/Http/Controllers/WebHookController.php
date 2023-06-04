@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use Mollie\Laravel\Facades\Mollie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,6 +21,12 @@ class WebHookController extends Controller
              * The payment is paid and isn't refunded or charged back.
              * At this point you'd probably want to start the process of delivering the product to the customer.
              */
+            $orderId = $payment->metadata->order_id;
+            $order = Order::findOrFail($orderId);
+            $order->status = "Betaald";
+            $order->save();
+
+
             Log::alert('Betaling is gelukt!');
         } elseif ($payment->isOpen()) {
             /*
