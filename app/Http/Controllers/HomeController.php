@@ -17,13 +17,15 @@ class HomeController extends Controller
         //user info (lidgeld)
         $user = auth()->user();
         // dd($user);
+        if($user) {
         $userStatus = UserStatus::where('user_id', $user->id)->first();
 
         $lidgeldBetaald = $userStatus ? $userStatus->isPaid() : false;
         // $posts = Post::paginate(10); // SELECT * FROM posts
         $cart = Cart::session(3);
-
         return view('home.index', compact('menuItems', 'cart', 'lidgeldBetaald'));
+        } else 
+        return view('home.index', compact('menuItems'));
     }
 
     // public function show($slug)

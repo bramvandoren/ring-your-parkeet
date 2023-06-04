@@ -42,6 +42,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 Route::post('/login', [LoginController::class, 'authenticated'])->name('login');
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
+Route::get('/rich/thanks', [MoneyController::class, 'thanks'])->name('rich.thanks');
+
 //Dashboard route
 Route::middleware('auth')->group(function () {
 

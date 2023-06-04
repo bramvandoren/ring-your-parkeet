@@ -5,7 +5,7 @@
     <div class="container">
         <!-- Lidgeld betalen -->
         <h3>Lidgeld betalen</h3>
-        <p>Jaarlijks lidgeld: ${{ $lidgeld }}</p>
+        <p>Jaarlijks lidgeld: € {{ $lidgeld }}</p>
         <form method="POST" action="{{ route('dashboard.betalingLidgeld') }}">
             @csrf
             <button type="submit" class="btn btn-primary">Betaal lidgeld</button>

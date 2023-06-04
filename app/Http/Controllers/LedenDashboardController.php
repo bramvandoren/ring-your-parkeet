@@ -7,8 +7,10 @@ use App\Models\Bestelling;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use App\Order;
 use App\UserStatus;
+use Illuminate\Support\Facades\App;
 
 use Illuminate\Http\Request;
+use Mollie\Laravel\Facades\Mollie;
 
 class LedenDashboardController extends Controller
    
@@ -34,20 +36,43 @@ class LedenDashboardController extends Controller
             return view('dashboard.index', compact('user', 'bestellingen','menuItems', 'lidgeld', 'cart', 'lidgeldBetaald'));
         }
     
-        public function betalingLidgeld()
+        public function betalingLidgeld(Request $req)
         {
-            // Plaats hier de logica voor het verwerken van de betaling van het lidgeld via Mollie
+            
     
-            // Markeer het lidgeld als betaald voor de ingelogde gebruiker
-            $user = auth()->user();
-            $userStatus = UserStatus::where('user_id', $user->id)->first();
+            $amount = 50;
+            // add to decimals and convert to string
+            $amount = (string) number_format($amount, 2, '.', '');
+            $webhookUrl = route('webhooks.mollie');
 
-            if ($userStatus) {
-                $userStatus->status = 'betaald';
-                $userStatus->save();
+            if(App::environment('local')) {
+                $webhookUrl = 'https://483e-87-67-0-190.ngrok-free.app/webhooks/mollie';
             }
+            $payment = Mollie::api()->payments->create([
+                "amount" => [
+                    "currency" => "EUR",
+                    "value" => "10.00" // You must send the correct number of decimals, thus we enforce the use of strings
+                ],    
+                "description" => "Order #12345",
+                "redirectUrl" => route('rich.thanks'),
+                "webhookUrl" => $webhookUrl,
+                "metadata" => [
+                    "order_id" => "12345",
+                ],
+            ]);
     
-            return redirect()->route('dashboard.index')->with('success', 'Lidgeld succesvol betaald.');
+            return redirect($payment->getCheckoutUrl(), 303);
+            
+            // Markeer het lidgeld als betaald voor de ingelogde gebruiker
+            // $user = auth()->user();
+            // $userStatus = UserStatus::where('user_id', $user->id)->first();
+
+            // if ($userStatus) {
+            //     $userStatus->status = 'betaald';
+            //     $userStatus->save();
+            // }
+    
+            // return redirect()->route('dashboard.index')->with('success', 'Lidgeld succesvol betaald.');
         }
 
         public function showRingenBestellenForm()
