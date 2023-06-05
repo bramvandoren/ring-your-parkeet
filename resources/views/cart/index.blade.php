@@ -13,13 +13,13 @@
                                 <p>image</p>
                             </div>
                             <div class="d-flex flex-column">
-                                <p>{{ $item->name->name }}</p>
+                                {{-- <p>{{ $item->attributes }}</p> --}}
                                 <p>{{ $item->name->type_id }}</p>
                                 <p>Aantal:
                                     <input type="number" min="1" name="aantal[]" value="{{ $item->quantity }}" class="form-control">
                                     <input type="hidden" name="item_id[]" value="{{ $item->id }}">
                                 </p>
-                                <a href="{{ route('cart.remove', ['id' => $item->id]) }}" class="btn btn-link">Item verwijderen</a>
+                                <a href="{{ route('cart.remove', ['id' => $item->id]) }}" class="link-danger">Item verwijderen</a>
                             </div>
                             <div class="d-flex align-items-center">
                                 <h3>€ {{ $item->price }}</h3>

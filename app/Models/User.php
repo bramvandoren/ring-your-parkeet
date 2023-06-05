@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\UserGroup;
+use App\UserStatus;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,7 +19,7 @@ class User extends \TCG\Voyager\Models\User
      *
      * @var array<int, string>
      */
-    protected $fillable = ['firstname', 'lastname', 'email'];
+    // protected $fillable = ['firstname', 'lastname', 'email'];
 
 
     /**
@@ -44,9 +46,20 @@ class User extends \TCG\Voyager\Models\User
         return $this->role_id === $adminRole->id;
     }
     public function isMember()
-{
-    $memberRole = Role::where('name', 'member')->first();
-    return $this->role_id === $memberRole->id;
-}
+    {
+        $memberRole = Role::where('name', 'member')->first();
+        return $this->role_id === $memberRole->id;
+    }
+
+    public function userGroup()
+    {
+        return $this->belongsTo(UserGroup::class, 'group_id');
+    }
+
+    public function userStatus()
+    {
+        return $this->hasOne(UserStatus::class, 'user_id');
+    }
+
 
 }

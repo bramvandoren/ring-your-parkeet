@@ -30,10 +30,12 @@ class LoginController extends Controller
 
     public function authenticated(Request $request)
 {
-    $credentials = $request->only('firstname', 'password');
-    $remember = $request->filled('remember');
+    $credentials = $request->validate([
+        'email' => 'required',
+        'password' => 'required',
+    ]);
 
-    if (auth()->attempt($credentials, $remember)) {
+    if (auth()->attempt($credentials)) {
         // Inloggen is gelukt, voer hier je gewenste acties uit
         return redirect('/leden-dashboard');
     } else {

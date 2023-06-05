@@ -2,20 +2,22 @@
 
 @section('content')
     <div class="container">
-        <h1>Contact Us</h1>
-
-        <p>Feel free to get in touch with us using the contact information below:</p>
+        <h1>Contacteer mij</h1>
 
         <div class="contact-info">
-            <h3>Address</h3>
-            <p>123 Main Street</p>
-            <p>City, Country</p>
+            <h3>Naam</h3>
+            <p><b>Luc De Baecker</b></p>
+            <h3>Adres</h3>
+            <p>Vikingstraat 24</p>
+            <p>8800 Roeselare</p>
 
             <h3>Email</h3>
-            <p>info@example.com</p>
+            <p>bvp.ringendienst@gmail.com</p>
+            <a href="mailto:bvp.ringendienst@gmail.com">Stuur een e-mail</a>
 
-            <h3>Phone</h3>
-            <p>+1 123-456-7890</p>
+
+            <h3>GSM</h3>
+            <p>0485/85 33 76</p>
         </div>
 
         {{-- <h2>Contact Form</h2>

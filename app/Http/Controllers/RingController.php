@@ -8,18 +8,26 @@ use Illuminate\Http\Request;
 
 class RingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $menuItems = $this->menuItems;
         $menuItems[1]['active'] = true;
         // Hier kun je de winkelwagengegevens ophalen en doorgeven aan de view
         // $cartItems = session()->get('cart') ?? [];
         $vogelringen = Ring::with('type')->get();
-        // $imageRing = Ring::find(1);
+        // $kleurVogelringen = Ring::with('type')->whereHas('type', function ($query) {
+        //     $query->where('Standaard aluminium vogelringen')->get();
+        // $inoxVogelringen = Ring::with('type')->where('type', 'Standaard RVS Ringen')->get();
+        $kleurVogelringen = Ring::with('type')->whereHas('type', function ($query) {
+            $query->where('name', 'Standaard aluminium vogelringen');
+        })->get();
+        $inoxVogelringen = Ring::with('type')->whereHas('type', function ($query) {
+            $query->where('name', 'Standaard RVS Ringen');
+        })->get();
+        // dd($inoxVogelringen);
         $cart = Cart::session(3);
-        // dd($cart->getContent());
 
-        return view('order.index', compact('menuItems', 'cart', 'vogelringen'));
+        return view('order.index', compact('menuItems', 'cart', 'kleurVogelringen', 'inoxVogelringen'));
     }
 
     public function store(Request $request)
@@ -80,5 +88,7 @@ class RingController extends Controller
     
         return redirect()->back();
     }
+
+    
 
 }

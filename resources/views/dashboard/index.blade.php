@@ -12,7 +12,8 @@
             <p>Jaarlijks lidgeld: € {{ $lidgeld }}</p>
             <form method="POST" action="{{ route('dashboard.betalingLidgeld') }}">
                 @csrf
-                <button type="submit" class="btn btn-primary">Betaal lidgeld</button>
+                {{-- <button type="submit" class="btn btn-primary">Betaal lidgeld</button> --}}
+                <a href="{{ route('dashboard.betalingLidgeld') }}" class="btn btn-primary">Betaal lidgeld</a>
             </form>
         @endif
     </div>
@@ -41,7 +42,7 @@
                             <td>{{ $bestelling->id }}</td>
                             <td>{{ $bestelling->status }}</td>
                             <td>
-                                <a href="{{ route('bestelling.detail', $bestelling->id) }}" class="btn btn-primary">Meer info</a>
+                                <a href="{{ route('bestelling.detail', $bestelling->id) }}" class="btn btn-outline-primary">Meer info</a>
                             </td>
                         </tr>
                     @endforeach

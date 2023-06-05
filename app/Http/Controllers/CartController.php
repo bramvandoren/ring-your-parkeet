@@ -13,7 +13,7 @@ class CartController extends Controller
         $menuItems[1]['active'] = true;
         // Hier kun je de winkelwagengegevens ophalen en doorgeven aan de view
         // $cartItems = session()->get('cart') ?? [];
-        $vogelringen = Ring::all();
+        $vogelringen = Ring::with('type')->get();
         $cart = Cart::session(3);
         // dd($cart->getContent());
         return view('cart.index', compact('menuItems', 'cart', 'vogelringen'));
@@ -21,13 +21,13 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-          // $request->session()->flush();
 
         // add a ring to the cart
         $ringId = $request->input("button_id");
         $amount = $request->input($ringId);
-
+         // Haal het type van de ring op
         $ring = Ring::find($ringId);
+        $type = $ring->type()->first();
 
         $cart = session()->get('cart');
 
@@ -41,6 +41,10 @@ class CartController extends Controller
                         "ring_price" => $ring->price,
                         "price" => $ring->price * $amount,
                         "id" => $ring->id,
+                        'attributes' => [
+                            'type' => $type, // Gebruik het type van de ring
+                            // Voeg andere attributen toe indien nodig
+                        ]
                     ]
             ];
             session()->put('cart', $cart);
@@ -67,7 +71,6 @@ class CartController extends Controller
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
         
-        // return redirect()->route('cart')->with('success', 'Item is toegevoegd aan de winkelwagen.');
     }
 
     public function update(Request $request)

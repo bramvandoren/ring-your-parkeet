@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
 @section('content')
-    <div>
-        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+    <div class="container">
+        <a href="{{ url()->previous() }}" class="btn btn-primary">&#60; Terug</a>
     </div>
     <div class="container">
         <h3>Bestelling {{ $bestelling->id }}</h3>
-        <p>{{ $bestelling->reference }}</p>
-        <p>{{ $bestelling->status }}</p>
-        <p>{{ $bestelling->total_price }}</p>
-        <p>{{ $bestelling->shipping_data }}</p>
-        <p>{{ $bestelling->payment_data }}</p>
-        <p>{{ $bestelling->remarks }}</p>
-        <p>{{ $bestelling->admin_remarks }}</p>
+        <p>Referentie: {{ $bestelling->reference }}</p>
+        <p>Status: {{ $bestelling->status }}</p>
+        <p>Prijs: <b> € {{ $bestelling->total_price }}</b></p>
+        <p>Bestellingsinfo:{{ $bestelling->shipping_data }}</p>
+        <p>Betalingsinfo:{{ $bestelling->payment_data }}</p>
+        <p>Opmerkingen:{{ $bestelling->remarks }}</p>
+        <p>Opmerkingen voor Admin: {{ $bestelling->admin_remarks }}</p>
 
         <h4>Order Items:</h4>
         <table>

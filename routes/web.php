@@ -42,7 +42,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 Route::post('/login', [LoginController::class, 'authenticated'])->name('login');
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-Route::get('/rich/thanks', [MoneyController::class, 'thanks'])->name('rich.thanks');
 
 //Dashboard route
 Route::middleware('auth')->group(function () {
@@ -58,7 +57,9 @@ Route::middleware('auth')->group(function () {
 
 
     // Route voor jaarlijks lidgeld
-    Route::post('/leden-dashboard/betaling-lidgeld', [LedenDashboardController::class, 'betalingLidgeld'])->name('dashboard.betalingLidgeld');
+    Route::get('/leden-dashboard/betaling-lidgeld', [LedenDashboardController::class, 'betalingLidgeld'])->name('dashboard.betalingLidgeld');
+    Route::get('/betaling-lidgeld/success', [LedenDashboardController::class, 'success'])->name('lidgeld.success');
+    Route::post('/webhooks/mollie', [WebHookController::class, 'handleLidgeld'])->name('webhooks.mollie');
 
     // Route voor het bestellen van ringen (formulier weergeven)
     Route::get('/leden-dashboard/ringen-bestellen', [RingController::class, 'index'])
@@ -94,12 +95,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 
 
+    // Route voor het afrekenen
+    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('cart.checkout');
+    Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::post('/webhooks/mollie', [WebHookController::class, 'handle'])->name('webhooks.mollie');
 });
 
-// Route voor het afrekenen
-Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('cart.checkout');
-Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
-Route::post('/webhooks/mollie', [WebHookController::class, 'handle'])->name('webhooks.mollie');
 
 
 // Route voor admin

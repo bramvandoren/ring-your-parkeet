@@ -23,6 +23,7 @@ class CheckoutController extends Controller
         // dd(auth()->user());
         //Maak nieuwe bestelling
         $order = new Order();
+        $order->user_id = auth()->id(); // Gebruik de juiste gebruikers-ID
         $order->reference = auth()->user()->firstname; // Genereer een referentiecode of gebruik een andere methode om een unieke referentie te maken
         $order->status = 'pending...'; // Stel de juiste status in
         $order->total_price = $total; // Wordt later berekend op basis van de ontvangen producten
@@ -51,7 +52,7 @@ class CheckoutController extends Controller
             "webhookUrl" => $webhookUrl,
             "metadata" => [
                 "order_id" => $order->id,
-                "order_from" => $order->name,
+                "order_from" => auth()->user()->firstname . auth()->user()->lastname,
             ],
         ]);
     
@@ -61,7 +62,13 @@ class CheckoutController extends Controller
         return redirect($payment->getCheckoutUrl(), 303);
     }
 
-    public function success() {
-        return 'Jouw bestelling is goed binnengekomen!';
+    public function success(Request $req)
+    {
+        // Maak cart leeg
+        $cart = Cart::session(3);
+        Cart::session(auth()->id())->clear();
+
+        // Keer terug naar de succes-pagina met de gegevens van de bestelling
+        return view('checkout.success', compact('cart'));
     }
 }
