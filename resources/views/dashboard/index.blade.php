@@ -9,7 +9,7 @@
             <p>Lidgeld betaald.</p>
             <button class="btn btn-primary" data-toggle="modal" data-target="#paymentDetailsModal">Bekijk betalingsdetails</button>
         @else
-            <p>Jaarlijks lidgeld: € {{ $lidgeld }}</p>
+            <p>Jaarlijks lidgeld:<b> € {{ $lidgeld }} </b>(Groep: {{$userGroup->name}})</p>
             <form method="POST" action="{{ route('dashboard.betalingLidgeld') }}">
                 @csrf
                 {{-- <button type="submit" class="btn btn-primary">Betaal lidgeld</button> --}}
@@ -64,19 +64,18 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    @if ($userStatus)
                     <!-- Weergeven van details betaling -->
                     <p>Betalingsinformatie:</p>
                     <ul>
                         <li>Transactie ID: {{ $userStatus->id }}</li>
-                        <li>Betaalinformatie: {{ $userStatus->payment_data }}</li>
-                        <li>Bedrag: € {{ $userStatus->total_price }}</li>
-                        <li>Datum: {{ $userStatus->date }}</li>
+                        <!-- Voeg hier andere betalingsdetails toe -->
                     </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                </div>
-            </div>
-        </div>
+                    @else
+                        <!-- Geen betalingsinformatie beschikbaar -->
+                        <p>Geen betalingsinformatie gevonden.</p>
+                    @endif
+                        </div>
+                    </div>
     </div>
 @endsection

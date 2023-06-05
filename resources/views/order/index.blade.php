@@ -34,9 +34,6 @@
                                         <td>{{ $year }}</td>
                                     </tr>
                                 @endfor
-                                <tr>
-                                    <td>Zwart</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -62,7 +59,7 @@
             <div>
                 @foreach ($kleurVogelringen as $vogelring)
                     <tr>
-                        <td><img src="" alt="Afbeelding {{$vogelring->id}}" ></td>
+                        <td><img src="{{ asset($vogelring->type->image) }}" alt="Afbeelding {{ $vogelring->id }}"></td>
                         <td>{{ $vogelring->type->name }}</td>
                         <td>{{ $vogelring->diameter }}</td>
                         <td>{{ $vogelring->price }}</td>
@@ -95,7 +92,7 @@
             <div>
                 @foreach ($inoxVogelringen as $vogelring)
                     <tr>
-                        <td><img src="" alt="Afbeelding {{$vogelring->id}}" ></td>
+                        <td><img src="{{ asset($vogelring->type->image) }}" alt="Afbeelding {{ $vogelring->id }}" class="w-25 p-3"></class=>
                         <td>{{ $vogelring->type->name }}</td>
                         <td>{{ $vogelring->diameter }}</td>
                         <td>{{ $vogelring->price }}</td>

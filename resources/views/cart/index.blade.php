@@ -35,11 +35,9 @@
         </div>
         <div>
             <h2 class="mt-4">We accepteren</h2>
-            <ul class="payment-icons">
-                <li><i class="fab fa-cc-visa"></i></li>
-                <li><i class="fab fa-cc-mastercard"></i></li>
-                <li><i class="fab fa-cc-paypal"></i></li>
-                <li><i class="fab fa-cc-amex"></i></li>
+            <ul class="list-unstyled">
+                <li><img src="../img/Bancontact.png" alt="bancontact" class="w-25 p-3"></li>
+                <li><img src="../img/paypal.png" alt="paypal" class="w-25 p-3"></li>
             </ul>
         </div>
     </div>

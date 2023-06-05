@@ -6,9 +6,11 @@
 
         <div class="card">
             <div class="card-body">
+                <h5 class="card-title">Stamnummer: {{ $user->stamnummer }}</h5>
                 <h5 class="card-title">Voornaam: {{ $user->firstname }}</h5>
                 <h5 class="card-title">Familienaam: {{ $user->lastname }} </h5>
-                <p class="card-text">E-mail: {{ $user->email }}</p>
+                {{-- <img src="../img/dirk.jpg" alt="Dirk" class="w-50 p-3"> --}}
+                <h5 class="card-text">E-mail: {{ $user->email }}</h5>
                 <p class="card-text">Adres: {{ $user->address_street }} {{ $user->address_nr }} {{ $user->address_zipcode }} {{ $user->address_city }}</p>
                 <p class="card-text">Geboortedatum: {{ $user->birthdate }}</p>
                 <p class="card-text">E-mail: {{ $user->phone }}</p>

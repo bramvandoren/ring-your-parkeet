@@ -19,8 +19,8 @@
             <thead>
                 <tr>
                     <th>Item ID</th>
-                    <th>Item Name</th>
-                    <th>Ring Type</th>
+                    <th>Item naam</th>
+                    <th>Aantal</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +28,8 @@
                     <tr>
                         <td>{{ $orderItem->id }}</td>
                         <td>{{ $orderItem->name }}</td>
-                        <td>{{ $orderItem->ringType->name }}</td>
+                        <td>{{ $orderItem->amount }}</td>
+                        {{-- <td>{{ $orderItem->ringType->name }}</td> --}}
                     </tr>
                 @endforeach
             </tbody>

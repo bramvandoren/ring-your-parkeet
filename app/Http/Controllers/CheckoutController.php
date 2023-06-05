@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Order;
+use App\OrdersItem;
 use Illuminate\Http\Request;
 use Mollie\Laravel\Facades\Mollie;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
@@ -59,6 +60,18 @@ class CheckoutController extends Controller
 
         $order->save();
 
+        // Maak orderitems aan en sla ze op in de database
+        foreach ($cart->getContent() as $item) {
+            $orderItem = new OrdersItem();
+            $orderItem->order_id = $order->id; // Koppel het orderitem aan de bestelling
+            $orderItem->ring_id = $item->id; // Vervang dit met de juiste kolomnaam voor de ring_id
+            $orderItem->amount = $item->quantity; // Vervang dit met de juiste kolomnaam voor de amount
+            $orderItem->ring_codes = '...'; // Vul de juiste ringcodes in
+            $orderItem->ring_data = '...'; // Vul de juiste ringdata in
+            $orderItem->save();
+        }
+
+
         return redirect($payment->getCheckoutUrl(), 303);
     }
 
@@ -66,7 +79,8 @@ class CheckoutController extends Controller
     {
         // Maak cart leeg
         $cart = Cart::session(3);
-        Cart::session(auth()->id())->clear();
+        Cart::clear();
+        Cart::session(3)->clear();
 
         // Keer terug naar de succes-pagina met de gegevens van de bestelling
         return view('checkout.success', compact('cart'));

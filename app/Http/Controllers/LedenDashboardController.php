@@ -38,7 +38,7 @@ class LedenDashboardController extends Controller
             $bestellingen = Order::where('user_id', $user->id)->get();
             $cart = Cart::session(3);
     
-            return view('dashboard.index', compact('user', 'bestellingen','menuItems', 'lidgeld', 'cart', 'lidgeldBetaald', 'userStatus'));
+            return view('dashboard.index', compact('user', 'bestellingen','menuItems', 'lidgeld', 'cart', 'lidgeldBetaald', 'userStatus', 'userGroup'));
         }
     
         public function betalingLidgeld()
@@ -82,9 +82,10 @@ class LedenDashboardController extends Controller
                 "redirectUrl" => route('dashboard.index'),
                 "webhookUrl" => $webhookUrl,
                 "metadata" => [
-                    "user_status" => $user->userStatus->status,
+                    "user_status" => isset($user->userStatus) ? $user->userStatus->status : null,
                     "order_from" => auth()->user()->firstname . " " . auth()->user()->lastname,
                 ],
+                
             ]);
         
     
@@ -142,12 +143,21 @@ class LedenDashboardController extends Controller
         }
 
         public function detailBestelling($id)
-        {
-            $bestelling = Order::findOrFail($id);
-            $bestellingenDetail = $bestelling->bestellingenDetail;
-            $cart = Cart::session(3);
-            return view('dashboard.edit', compact('cart', 'bestelling', 'bestellingenDetail'));
+    {
+        $bestelling = Order::findOrFail($id);
+        $bestellingenDetail = $bestelling->orderItems;
+        $cart = Cart::session(3);
+
+        // dd($bestellingenDetail);
+        // Access the related Ring model for each OrdersItem
+        foreach ($bestellingenDetail as $item) {
+            $ring = $item->ring; // Retrieve the related Ring model
+            // Use the $ring object as needed
         }
+
+        return view('dashboard.edit', compact('cart', 'bestelling', 'bestellingenDetail'));
+    }
+
         public function verwijderBestelling(Order $bestelling)
         {
             // Voer hier de logica uit om de bestelling te verwijderen

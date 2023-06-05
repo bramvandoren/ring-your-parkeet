@@ -78,7 +78,7 @@ class WebHookController extends Controller
             $user_status = "Betaald";
             // Update de waarde "Betaald" in de database
             $user = User::find(auth()->user()->id);
-            dd($user);
+            // dd($user);
             $user = auth()->user();
             $userStatus = UserStatus::where('user_id', $user->id)->first();
             
