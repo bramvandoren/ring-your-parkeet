@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use App\Mail\OrderPlaced;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationEmail;
+
 
 
 class CheckoutController extends Controller
@@ -82,7 +86,20 @@ class CheckoutController extends Controller
         Cart::clear();
         Cart::session(3)->clear();
 
+        // // Verstuur de e-mail
+        // $email = auth()->user()->email;
+        // $this->sendOrderConfirmationEmail($email);
+
         // Keer terug naar de succes-pagina met de gegevens van de bestelling
         return view('checkout.success', compact('cart'));
     }
+    // public function sendOrderConfirmationEmail(Order $order)
+    // {
+    //     // Verstuur de orderbevestigingsmail naar de klant
+    //     Mail::to($order->email)->send(new OrderConfirmationEmail($order));
+
+    //     // Eventuele andere logica of acties na het verzenden van de e-mail
+
+    //     return redirect()->back()->with('success', 'Orderbevestigingsmail is verzonden.');
+    // }
 }
