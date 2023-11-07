@@ -1,3 +1,14 @@
+# Ring-your-parkeet
+Ik heb gewerkt aan een project voor de Belgische Vereniging van Parkieten- en Papegaaienliefhebbers vzw. Het doel was om het tijdrovende en foutgevoelige proces van het bestellen en registreren van parkietenringen te automatiseren en te vereenvoudigen.
+Probleem: 
+Het huidige proces, beheerd door de enthousiaste vrijwilliger Luc, omvatte handmatige invoer en administratie via Excel en Word, wat leidde tot veel potentiële fouten en vertragingen.
+Oplossing:
+Een publiek gedeelte met informatie over de besteltool en een beveiligd inloggedeelte.
+Leden kunnen jaarlijks hun lidmaatschap betalen via Mollie, hun gegevens beheren, ringen bestellen en bestelstatussen volgen.
+Luc heeft een krachtig dashboard voor het beheren van ringen, leden en bestellingen, inclusief de mogelijkheid om periodieke bestellingen te selecteren en gegevens te exporteren.
+Aan de hand van Laravel en MySQL.
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
